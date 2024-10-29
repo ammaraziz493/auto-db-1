@@ -1,4 +1,4 @@
-# Jenkins Build Information Store In DB.
+# Jenkins Build Information Store In DB
 
 ## Introduction
 
