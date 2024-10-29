@@ -1,0 +1,2 @@
+_extends: .github
+tag-template: auto-db-1-$NEXT_MINOR_VERSION
