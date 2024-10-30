@@ -13,9 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Extension
-public class ProcessController extends RunListener<Run<?, ?>> {
+public class BuildStore extends RunListener<Run<?, ?>> {
 
-    private static final Logger LOGGER = Logger.getLogger(ProcessController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(BuildStore.class.getName());
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/jenkins_builds";
     private static final String DB_USER = "postgres";
     private static final String DB_PASSWORD = "1234";
