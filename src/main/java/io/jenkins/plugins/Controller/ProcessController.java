@@ -63,7 +63,6 @@ public class ProcessController implements UnprotectedRootAction {
             return null; // Indicate that we have handled the response
         }
 
-
         String sql = "SELECT build_number, job_name, result, event_start_time, event_end_time FROM process WHERE build_number = ?";
         JSONArray jobs = new JSONArray();
 
@@ -85,25 +84,25 @@ public class ProcessController implements UnprotectedRootAction {
 
             // If there are results, continue processing
             while (rs.next()) {
-                // Use a simple array to hold job data
-                String[] job = new String[5];
-                job[0] = rs.getString("build_number");
-                job[1] = rs.getString("job_name");
-                job[2] = rs.getString("result");
-                job[3] = rs.getTimestamp("event_start_time") != null ? rs.getTimestamp("event_start_time").toString() : null;
-                job[4] = rs.getTimestamp("event_end_time") != null ? rs.getTimestamp("event_end_time").toString() : null;
+                // Create a JSON object for each job
+                JSONObject jsonJob = new JSONObject();
+                jsonJob.put("build_number", rs.getInt("build_number"));
+                jsonJob.put("job_name", rs.getString("job_name"));
+                jsonJob.put("result", rs.getString("result"));
+                jsonJob.put("event_start_time", rs.getTimestamp("event_start_time") != null ? rs.getTimestamp("event_start_time").toString() : null);
+                jsonJob.put("event_end_time", rs.getTimestamp("event_end_time") != null ? rs.getTimestamp("event_end_time").toString() : null);
 
-                // Add the job data to the JSON array
-                JSONArray jsonJob = new JSONArray();
-                for (String field : job) {
-                    jsonJob.put(field);
-                }
+                // Add the job JSON object to the jobs array
                 jobs.put(jsonJob);
             }
 
+            // Wrap jobs array in a JSON object
+            JSONObject jsonResponse = new JSONObject();
+            jsonResponse.put("jobs", jobs);
+
             // Set the response content type and write the JSON output
             rsp.setContentType("application/json");
-            rsp.getWriter().write(jobs.toString());
+            rsp.getWriter().write(jsonResponse.toString());
             return null; // Returning null as we have handled the response ourselves
 
         } catch (Exception e) {
@@ -117,7 +116,6 @@ public class ProcessController implements UnprotectedRootAction {
             return null; // Indicate that we have handled the response
         }
     }
-
 
 
 }
