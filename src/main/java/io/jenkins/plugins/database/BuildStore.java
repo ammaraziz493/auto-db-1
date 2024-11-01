@@ -1,4 +1,4 @@
-package io.jenkins.plugins;
+package io.jenkins.plugins.database;
 
 import hudson.Extension;
 import hudson.model.Run;
